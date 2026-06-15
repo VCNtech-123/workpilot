@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { ApiError }from '../../utils/apiError'
 
 export const validateRegister = (
     req: Request,
@@ -8,7 +9,7 @@ export const validateRegister = (
     const { email, name, password } = req.body;
 
     if ( !name || !email || !password ) {
-        throw new Error('All fields are required!');
+        throw new ApiError(400, "All fields are required");
     }
 
     if (password.length < 8) {
