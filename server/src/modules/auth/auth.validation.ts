@@ -19,3 +19,16 @@ export const validateRegister = (
     next();
 }
     
+export const validateLogin = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { email, password } = req.body;
+
+    if (!email || !password ) {
+        throw new ApiError(400, 'Email and password are required');
+    } 
+
+    next();
+}
