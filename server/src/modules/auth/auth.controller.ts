@@ -1,7 +1,18 @@
 import { Request, Response } from "express";
+import { registerUser } from './auth.service';
 
 export const register = async (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "Register endpoint hit",
-  });
+
+    const { name, email, password } = req.body;
+    const user = await registerUser(name, email, password);
+
+    res.status(201).json({
+        status: "success",
+        data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        },
+    });
 };
