@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { registerUser, loginUser } from './auth.service';
+import { generateToken } from '../../utils/generateToken';
 
 export const register = async (req: Request, res: Response) => {
 
@@ -21,9 +22,10 @@ export const login = async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
     const user = await loginUser(email, password);
-
+    const token = generateToken(user._id.toString());
      res.status(200).json({
         status: "success",
+        token,
         data: {
         id: user._id,
         name: user.name,
