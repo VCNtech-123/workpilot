@@ -8,6 +8,8 @@ export interface IClient extends mongoose.Document {
     notes?: string;
     status: 'active' | 'inactive';
     owner: mongoose.Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const clientSchema = new Schema<IClient>(
