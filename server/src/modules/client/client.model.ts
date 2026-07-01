@@ -8,6 +8,7 @@ export interface IClient extends mongoose.Document {
     notes?: string;
     status: 'active' | 'inactive';
     owner: mongoose.Types.ObjectId;
+    isDeleted: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -46,6 +47,10 @@ const clientSchema = new Schema<IClient>(
             ref: 'User',
             required: true
         },
+        isDeleted: {
+            type: Boolean,
+            default: false
+            }
     },
     {
         timestamps: true,

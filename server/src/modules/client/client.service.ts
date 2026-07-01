@@ -31,3 +31,16 @@ export const getClientsService = async (userId: string) => {
 
   return clients;
 };
+
+export const getClientByIdService = async (
+  id: string,
+  userId: string
+) => {
+  const client = await Client.findOne({
+    _id: id,
+    owner: userId,
+    isDeleted: false,
+  });
+
+  return client;
+};
