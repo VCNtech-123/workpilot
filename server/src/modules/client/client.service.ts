@@ -22,3 +22,12 @@ export const createClientService = async (
 
   return client;
 };
+
+export const getClientsService = async (userId: string) => {
+  const clients = await Client.find({
+    owner: userId,
+    isDeleted: false,
+  }).sort({ createdAt: -1 });
+
+  return clients;
+};
