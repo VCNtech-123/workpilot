@@ -32,7 +32,7 @@ export const getProjectByIdService = async (
 ) => {
   const project = await Project.findOne({
     _id: id,
-    ownerId: userId,
+    owner: userId,
     isDeleted: false
   });
 
