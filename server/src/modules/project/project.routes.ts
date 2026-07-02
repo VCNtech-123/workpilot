@@ -6,7 +6,8 @@ import { validateCreateProject } from './project.validation';
 const router = Router();
 
 router.post("/", protect, validateCreateProject, createProject);
-router.get(":id", protect, getProjectById);
+router.get("/", protect, getProjects);
+router.get("/:id", protect, getProjectById);
 
 export default router;
 

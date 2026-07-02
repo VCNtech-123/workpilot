@@ -43,7 +43,7 @@ export const getProjectsService = async (
   userId: string
 ) => {
   const projects = await Project.find({
-    ownerId: userId, 
+    owner: userId, 
     isDeleted: false
   }).sort({ createdAt: -1 });
 
