@@ -1,0 +1,58 @@
+
+import mongoose, { Schema } from 'mongoose';
+
+export interface IProject extends mongoose.Document {
+    name: string;
+    description?: string;
+    status: 'active' | 'ongoing' | 'paused';
+    deadline?: Date;
+    budget?: number;
+    client: mongoose.Types.ObjectId;
+    owner: mongoose.Types.ObjectId;
+    isDeleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const projectSchema = new Schema<IProject>(
+     {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+    },
+    status: {
+      type: String,
+      enum: ["active", "completed", "paused"],
+      default: "active",
+    },
+    deadline: {
+      type: Date,
+    },
+    budget: {
+      type: Number,
+    },
+    client: {
+      type: Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
+
+export const Project = mongoose.model<IProject>("Project", projectSchema);
