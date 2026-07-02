@@ -9,10 +9,6 @@ export const createProject = async (req: Request, res: Response) => {
         (req as any).user._id
     );
 
-    if (!project) {
-        throw new ApiError(400, 'Project creation failed');
-    }
-
     res.status(201).json({
         status: "success",
         data: {

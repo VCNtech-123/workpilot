@@ -1,26 +1,27 @@
 
-import { Project } from './project.model';
+import { Project, IProject } from './project.model';
 import { Client } from '../client/client.model';
 import { ApiError } from '../../utils/apiError';
 
 export const createProjectService = async (
-    data: any,
-    userId: string
-) => {
-    const client = await Client.findOne({
-        _id: data.client,
-        owner: userId,
-        isDeleted: false 
-    });
+  data: any,
+  userId: string
+): Promise<IProject> => {
 
-    if (!client) {
-        throw new ApiError(400, 'Invalid Client');
-    }
+  const client = await Client.findOne({
+    _id: data.client,
+    owner: userId,
+    isDeleted: false
+  });
 
-    const project = await Project.findOne({
-        ...data,
-        owner: userId
-    })
+  if (!client) {
+    throw new ApiError(400, "Invalid client");
+  }
 
-    return project;
-}
+  const project = await Project.create({
+    ...data,
+    owner: userId
+  });
+
+  return project;
+};
