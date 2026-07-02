@@ -3,7 +3,7 @@ import { createClientService } from "./client.service";
 import { getClientsService } from "./client.service";
 import mongoose from "mongoose";
 import { ApiError } from "../../utils/apiError";
-import { getClientByIdService } from "./client.service";
+import { getClientByIdService, updateClientService } from "./client.service";
 
 export const createClient = async (req: Request, res: Response) => {
   const client = await createClientService(
@@ -72,6 +72,39 @@ export const getClientById = async (req: Request, res: Response) => {
       company: client.company,
       status: client.status,
       createdAt: client.createdAt,
+    },
+  });
+};
+
+
+export const updateClient = async (req: Request, res: Response) => {
+  const id = req.params.id as string;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, "Invalid client ID");
+  }
+
+  const updatedClient = await updateClientService(
+    id,
+    (req as any).user._id,
+    req.body
+  );
+
+  if (!updatedClient) {
+    throw new ApiError(404, "Client not found");
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      id: updatedClient._id,
+      name: updatedClient.name,
+      email: updatedClient.email,
+      phone: updatedClient.phone,
+      company: updatedClient.company,
+      notes: updatedClient.notes,
+      status: updatedClient.status,
+      updatedAt: updatedClient.updatedAt,
     },
   });
 };

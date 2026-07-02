@@ -44,3 +44,31 @@ export const getClientByIdService = async (
 
   return client;
 };
+
+export const updateClientService = async (
+  id: string,
+  userId: string,
+  data: any
+) => {
+  const allowedFields = ["name", "email", "phone", "company", "notes", "status"];
+
+  const updateData: any = {};
+
+  for (const key of allowedFields) {
+    if (data[key] !== undefined) {
+      updateData[key] = data[key];
+    }
+  }
+
+  const updatedClient = await Client.findOneAndUpdate(
+    {
+      _id: id,
+      owner: userId,
+      isDeleted: false,
+    },
+    updateData,
+    { new: true }
+  );
+
+  return updatedClient;
+};
