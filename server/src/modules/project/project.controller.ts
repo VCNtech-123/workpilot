@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { createProjectService, getProjectByIdService, getProjectsService } from './project.service';
+import { createProjectService, getProjectByIdService, getProjectsService, updateProjectService } from './project.service';
 import { ApiError } from '../../utils/apiError';
 import mongoose from 'mongoose'
 
@@ -80,5 +80,40 @@ export const getProjects = async (
       client: project.client,
       createdAt: project.createdAt
     }))
+  });
+}
+
+export const updateProject = async (
+  req: Request,
+  res: Response
+) => {
+  const id = req.params.id as string;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, "Invalid project ID");
+  }
+
+  const updatedProject = await updateProjectService(
+    id,
+    (req as any).user._id,
+    req.body
+  );
+
+   if (!updatedProject) {
+    throw new ApiError(404, "Project not found");
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      id: updatedProject._id,
+      name: updatedProject.name,
+      description: updatedProject.description,
+      status: updatedProject.status,
+      deadline: updatedProject.deadline,
+      budget: updatedProject.budget,
+      client: updatedProject.client,
+      updatedAt: updatedProject.updatedAt
+    }
   });
 }

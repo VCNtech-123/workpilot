@@ -9,9 +9,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(errorMiddleware);
+
 app.use('/api/auth', authRoutes)
 app.use("/api/clients", clientRoutes);
 app.use("/api/projects", projectRoutes);
+
+app.use(errorMiddleware);
 
 export default app;
