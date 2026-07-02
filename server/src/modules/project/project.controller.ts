@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { createProjectService, getProjectByIdService } from './project.service';
+import { createProjectService, getProjectByIdService, getProjectsService } from './project.service';
 import { ApiError } from '../../utils/apiError';
 import mongoose from 'mongoose'
 
@@ -56,5 +56,29 @@ export const getProjectById = async (
       client: project.client,
       createdAt: project.createdAt
     }
+  });
+}
+
+export const getProjects = async (
+    req: Request,
+    res: Response
+) => {
+    const projects = await getProjectsService(
+    (req as any).user._id
+  );
+
+  res.status(200).json({
+    status: "success",
+    results: projects.length,
+    data: projects.map(project => ({
+      id: project._id,
+      name: project.name,
+      description: project.description,
+      status: project.status,
+      deadline: project.deadline,
+      budget: project.budget,
+      client: project.client,
+      createdAt: project.createdAt
+    }))
   });
 }

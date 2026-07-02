@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { protect } from '../../middleware/auth.middleware';
-import { createProject, getProjectById } from './project.controller';
+import { createProject, getProjectById, getProjects } from './project.controller';
 import { validateCreateProject } from './project.validation';
 
 const router = Router();

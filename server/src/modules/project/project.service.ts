@@ -38,3 +38,14 @@ export const getProjectByIdService = async (
 
   return project;
 }
+
+export const getProjectsService = async (
+  userId: string
+) => {
+  const projects = await Project.find({
+    ownerId: userId, 
+    isDeleted: false
+  }).sort({ createdAt: -1 });
+
+  return projects;
+}
