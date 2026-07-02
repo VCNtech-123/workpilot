@@ -4,29 +4,14 @@ import { errorMiddleware } from "./middleware/error.middleware";
 import authRoutes from './modules/auth/auth.routes'
 import clientRoutes from "./modules/client/client.routes";
 import projectRoutes from './modules/project/project.routes';
-import { protect } from "./middleware/auth.middleware";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.get("/api/health", (_req, res) => {
-  res.status(200).json({
-    status: "success",
-    message: "WorkPilot API is running 🚀",
-  });
-});
-
+app.use(errorMiddleware);
 app.use('/api/auth', authRoutes)
 app.use("/api/clients", clientRoutes);
 app.use("/api/projects", projectRoutes);
-app.use(errorMiddleware);
-app.get("/api/protected", protect, (req, res) => {
-  res.json({
-    message: "You accessed a protected route",
-    user: (req as any).user,
-  });
-});
 
 export default app;
