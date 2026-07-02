@@ -72,3 +72,24 @@ export const updateClientService = async (
 
   return updatedClient;
 };
+
+export const deleteClientService = async (
+ id: string,
+ userId: string,
+) => {
+  const deletedClient = await Client.findOneAndUpdate(
+    {
+      _id: id,
+      owner: userId,
+      isDeleted: false
+    },
+    {
+      isDeleted: true
+    },
+    {
+      new: true
+    }
+  );
+
+  return deletedClient;
+}
