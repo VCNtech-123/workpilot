@@ -3,6 +3,7 @@ import cors from "cors";
 import { errorMiddleware } from "./middleware/error.middleware";
 import authRoutes from './modules/auth/auth.routes'
 import clientRoutes from "./modules/client/client.routes";
+import projectRoutes from './modules/project/project.routes';
 import { protect } from "./middleware/auth.middleware";
 
 const app = express();
@@ -19,6 +20,7 @@ app.get("/api/health", (_req, res) => {
 
 app.use('/api/auth', authRoutes)
 app.use("/api/clients", clientRoutes);
+app.use("/api/projects", projectRoutes);
 app.use(errorMiddleware);
 app.get("/api/protected", protect, (req, res) => {
   res.json({
