@@ -25,3 +25,16 @@ export const createProjectService = async (
 
   return project;
 };
+
+export const getProjectByIdService = async (
+  id: string,
+  userId: string
+) => {
+  const project = await Project.findOne({
+    _id: id,
+    ownerId: userId,
+    isDeleted: false
+  });
+
+  return project;
+}
