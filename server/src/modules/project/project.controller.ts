@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { createProjectService, getProjectByIdService, getProjectsService, updateProjectService } from './project.service';
+import { createProjectService, getProjectByIdService, getProjectsService, updateProjectService, deleteProjectService } from './project.service';
 import { ApiError } from '../../utils/apiError';
 import mongoose from 'mongoose'
 
@@ -115,5 +115,31 @@ export const updateProject = async (
       client: updatedProject.client,
       updatedAt: updatedProject.updatedAt
     }
+  });
+}
+
+export const deleteProject = async (
+  req: Request,
+  res: Response
+) => 
+{
+  const id = req.params.id as string;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, 'Invalid project ID');
+  }
+
+  const deletedProject = await deleteProjectService(
+    id,
+    (req as any).user._id
+  );
+
+  if (!deletedProject) {
+    throw new ApiError(400, 'Project not found');
+  }
+
+  res.status(201).json({
+    status: "successful",
+    message: "Project deleted succesfully"
   });
 }

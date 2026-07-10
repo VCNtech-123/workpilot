@@ -102,3 +102,25 @@ export const updateProjectService = async (
 
   return updatedProject;
 }
+
+export const deleteProjectService = async (
+  id: string,
+  userId: string
+) => {
+  const deletedProject = Project.findOneAndUpdate(
+    {
+    _id: id,
+      owner: userId,
+      isDeleted: false
+    },
+    {
+      isDeleted: true
+    },
+    {
+      new: true
+    }
+
+  )
+
+  return deletedProject;
+}
