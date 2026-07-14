@@ -41,15 +41,38 @@ export const getProjectByIdService = async (
 }
 
 export const getProjectsService = async (
-  userId: string
+  userId: string,
+  query: any
 ) => {
-  const projects = await Project.find({
-    owner: userId, 
-    isDeleted: false
-  }).sort({ createdAt: -1 });
+  const page = parseInt(query.page as string) || 1;
+  const limit = parseInt(query.limit as string) || 10;
+  const status = query.status;
 
-  return projects;
-}
+  const skip = (page - 1) * limit;
+
+  const filter: any = {
+    owner: userId,
+    isDeleted: false,
+  };
+
+  if (status) {
+    filter.status = status;
+  }
+
+  const projects = await Project.find(filter)
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  const total = await Project.countDocuments(filter);
+
+  return {
+    projects,
+    total,
+    page,
+    pages: Math.ceil(total / limit),
+  };
+};
 
 export const updateProjectService = async (
   id: string,

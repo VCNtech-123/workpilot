@@ -60,28 +60,30 @@ export const getProjectById = async (
 }
 
 export const getProjects = async (
-    req: Request,
-    res: Response
+  req: Request,
+  res: Response
 ) => {
-    const projects = await getProjectsService(
-    (req as any).user._id
+  const result = await getProjectsService(
+    (req as any).user._id,
+    req.query
   );
 
   res.status(200).json({
     status: "success",
-    results: projects.length,
-    data: projects.map(project => ({
+    results: result.projects.length,
+    total: result.total,
+    page: result.page,
+    pages: result.pages,
+    data: result.projects.map(project => ({
       id: project._id,
       name: project.name,
-      description: project.description,
       status: project.status,
       deadline: project.deadline,
       budget: project.budget,
-      client: project.client,
-      createdAt: project.createdAt
-    }))
+      createdAt: project.createdAt,
+    })),
   });
-}
+};
 
 export const updateProject = async (
   req: Request,
