@@ -33,7 +33,7 @@ export const getTaskService = async (
 
     const page = parseInt(query.page as string) || 1;
     const limit = parseInt(query.limit as string) || 1;
-    const skip = (page - 1) || limit
+    const skip = (page - 1) * limit
 
     const filter: any = {
         owner: userId,

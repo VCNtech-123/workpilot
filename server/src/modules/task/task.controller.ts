@@ -33,7 +33,7 @@ export const getTasks = async (
 
     const result = await getTaskService(
         (req as any).user._id,
-        req.body
+        req.query
     )
 
     res.status(200).json({
