@@ -66,3 +66,17 @@ export const getTaskService = async (
         pages: Math.ceil(total / limit)
     }
 }
+
+export const getTaskByIdService = async (
+    id: string,
+    userId: string
+) => {
+    
+    const task = Task.findOne({
+        _id: id,
+        owner: userId,
+        isDeleted: false
+    });
+
+    return task;
+}
