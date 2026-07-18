@@ -80,3 +80,38 @@ export const getTaskByIdService = async (
 
     return task;
 }
+
+export const updateTaskService = async (
+    id: string,
+    userId: string,
+    data: any
+) => {
+
+    const allowedFields = [
+    "title",
+    "description",
+    "status",
+    "priority",
+    "dueDate"
+  ];
+
+  const updateData: any = {};
+
+  for (const key of allowedFields) {
+    if (data[key] !== undefined) {
+      updateData[key] = data[key];
+    }
+  }
+
+  const updatedTask = await Task.findOneAndUpdate(
+    {
+    _id: id,
+    owner: userId,
+    isDeleted: false
+  },
+    updateData,
+    { new: true }
+    );
+
+    return updatedTask;
+}

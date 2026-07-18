@@ -7,6 +7,7 @@ const router = Router();
 
 router.post("/", protect, validateCreateTask, createTask );
 router.get("/", protect, getTasks);
-router.get("/:id", protect, getTaskById)
+router.get("/:id", protect, getTaskById);
+router.put("/:id", protect)
 
 export default router;
