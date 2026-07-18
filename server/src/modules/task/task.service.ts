@@ -81,7 +81,7 @@ export const getTaskByIdService = async (
     return task;
 }
 
-export const updateTaskService = async (
+export const updateTaskByIdService = async (
     id: string,
     userId: string,
     data: any
