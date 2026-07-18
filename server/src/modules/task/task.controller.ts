@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { createTaskService, getTaskService, getTaskByIdService } from "./task.service";
+import { createTaskService, getTaskService, getTaskByIdService, updateTaskByIdService } from "./task.service";
 import mongoose from "mongoose";
 import { ApiError } from "../../utils/apiError";
 
@@ -90,4 +90,39 @@ export const getTaskById = async (
         createdAt: task.createdAt
         }
     })
+}
+
+export const updateTaskById = async (
+    req: Request,
+    res: Response
+) => {
+
+    const id = req.params.id as string;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new ApiError(400, "Invalid task ID")
+    }
+
+    const updatedTask = await updateTaskByIdService(
+        id,
+        (req as any).user._id,
+        req.body
+    )
+
+    if (!updatedTask) {
+        throw new ApiError(404, "Task not found");
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+        id: updatedTask._id,
+        title: updatedTask.title,
+        description: updatedTask.description,
+        status: updatedTask.status,
+        priority: updatedTask.priority,
+        dueDate: updatedTask.dueDate,
+        updatedAt: updatedTask.updatedAt
+        }
+    });
 }
