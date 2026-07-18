@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { protect } from '../../middleware/auth.middleware';
 import { validateCreateTask } from './task.validation';
-import { createTask } from './task.controller';
+import { createTask, getTasks } from './task.controller';
 
 const router = Router();
 
 router.post("/", protect, validateCreateTask, createTask );
-    
+router.get("/", protect, getTasks);
+
 export default router;
