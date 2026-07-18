@@ -25,3 +25,44 @@ export const createTaskService = async (
 
     return task;
 }
+
+export const getTaskService = async (
+    userId: string,
+    query: any
+) => {
+
+    const page = parseInt(query.page as string) || 1;
+    const limit = parseInt(query.limit as string) || 1;
+    const skip = (page - 1) || limit
+
+    const filter: any = {
+        owner: userId,
+        isDeleted: false
+    }
+
+    if (query.project) {
+        filter.project = query.project;
+    }
+
+    if (query.status) {
+        filter.status = query.status;
+    }
+
+    if (query.priority) {
+        filter.priority = query.priority;
+    } 
+
+    const tasks = await Task.find(filter)
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+    const total = await Task.countDocuments(filter);
+
+    return {
+        tasks,
+        total,
+        page,
+        pages: Math.ceil(total / limit)
+    }
+}
