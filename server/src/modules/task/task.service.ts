@@ -10,7 +10,7 @@ export const createTaskService = async (
 
     const project = await Project.findOne({
         _id: data.project,
-        onwer: userId,
+        owner: userId,
         isDeleted: false
     });
 
