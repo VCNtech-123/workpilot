@@ -48,6 +48,7 @@ const taskSchema = new Schema<ITask>(
         },
         isDeleted: {
             type: Boolean,
+            default: false,
             required: false
         }
     },
