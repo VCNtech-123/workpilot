@@ -115,3 +115,23 @@ export const updateTaskByIdService = async (
 
     return updatedTask;
 }
+
+export const deleteTaskService = async (
+    id: string,
+    userId: string
+) => {
+
+    const deletedTask = await Task.findOneAndUpdate(
+        {
+            _id: id,
+            owner: userId,
+            isDeleted: false
+        },
+        {
+            isDeleted: true
+        },
+        { new: true }
+    );
+
+    return deletedTask;
+}
