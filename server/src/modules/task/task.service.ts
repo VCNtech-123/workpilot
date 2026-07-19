@@ -2,10 +2,11 @@
 import { Task } from "./task.model";
 import { Project } from "../project/project.model";
 import { ApiError } from "../../utils/apiError";
+import mongoose from 'mongoose'
 
 export const createTaskService = async (
     data: any,
-    userId: string,
+    userId: mongoose.Types.ObjectId
 ) => {
 
     const project = await Project.findOne({
@@ -27,7 +28,7 @@ export const createTaskService = async (
 }
 
 export const getTaskService = async (
-    userId: string,
+    userId: mongoose.Types.ObjectId,
     query: any
 ) => {
 
@@ -69,7 +70,7 @@ export const getTaskService = async (
 
 export const getTaskByIdService = async (
     id: string,
-    userId: string
+    userId: mongoose.Types.ObjectId
 ) => {
     
     const task = Task.findOne({
@@ -83,7 +84,7 @@ export const getTaskByIdService = async (
 
 export const updateTaskByIdService = async (
     id: string,
-    userId: string,
+    userId: mongoose.Types.ObjectId,
     data: any
 ) => {
 
@@ -118,7 +119,7 @@ export const updateTaskByIdService = async (
 
 export const deleteTaskService = async (
     id: string,
-    userId: string
+    userId: mongoose.Types.ObjectId
 ) => {
 
     const deletedTask = await Task.findOneAndUpdate(

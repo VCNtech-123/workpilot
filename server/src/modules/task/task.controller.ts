@@ -9,7 +9,7 @@ export const createTask = async (
     res: Response
 ) => {
 
-    const id = (req as any).user._id;
+    const id = req.user!._id
 
     const task = await createTaskService(req.body, id);
 
@@ -34,7 +34,7 @@ export const getTasks = async (
 ) => {
 
     const result = await getTaskService(
-        (req as any).user._id,
+        req.user!._id,
         req.query
     )
 
@@ -70,7 +70,7 @@ export const getTaskById = async (
 
     const task = await getTaskByIdService(
         id,
-        (req as any).user._id
+        req.user!._id
     );
 
     if (!task) {
@@ -100,12 +100,12 @@ export const updateTaskById = async (
     const id = req.params.id as string;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw new ApiError(400, "Invalid task ID")
+        throw new ApiError(400, "Invalid task ID");
     }
 
     const updatedTask = await updateTaskByIdService(
         id,
-        (req as any).user._id,
+        req.user!._id,
         req.body
     )
 
@@ -140,7 +140,7 @@ export const deleteTask = async (
 
     const deletedTask = await deleteTaskService(
         id, 
-        (req as any).user._id
+        req.user!._id
     );
 
     if (!deletedTask) {
