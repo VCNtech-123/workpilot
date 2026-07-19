@@ -33,7 +33,7 @@ export const protect = async (
       throw new ApiError(401, "User no longer exists");
     }
 
-    (req as any).user = currentUser;
+    req.user = currentUser;
 
     next();
   } catch (error) {
