@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 export const createProjectService = async (
   data: any,
-  userId: string
+  userId: mongoose.Types.ObjectId
 ): Promise<IProject> => {
 
   const client = await Client.findOne({
@@ -29,7 +29,7 @@ export const createProjectService = async (
 
 export const getProjectByIdService = async (
   id: string,
-  userId: string
+  userId: mongoose.Types.ObjectId
 ) => {
   const project = await Project.findOne({
     _id: id,
@@ -41,7 +41,7 @@ export const getProjectByIdService = async (
 }
 
 export const getProjectsService = async (
-  userId: string,
+  userId: mongoose.Types.ObjectId,
   query: any
 ) => {
   const page = parseInt(query.page as string) || 1;
@@ -76,7 +76,7 @@ export const getProjectsService = async (
 
 export const updateProjectService = async (
   id: string,
-  userId: string,
+  userId: mongoose.Types.ObjectId,
   data: any
 ) => {
   const allowedFields = [
@@ -128,7 +128,7 @@ export const updateProjectService = async (
 
 export const deleteProjectService = async (
   id: string,
-  userId: string
+  userId: mongoose.Types.ObjectId
 ) => {
   const deletedProject = Project.findOneAndUpdate(
     {

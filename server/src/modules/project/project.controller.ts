@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 export const createProject = async (req: Request, res: Response) => {
     const project = await createProjectService(
         req.body,
-        (req as any).user._id
+        req.user!._id
     );
 
     res.status(201).json({
@@ -37,7 +37,7 @@ export const getProjectById = async (
 
     const project = await getProjectByIdService(
         id,
-        (req as any).user._id
+        req.user!._id
     );
 
     if (!project) {
@@ -64,7 +64,7 @@ export const getProjects = async (
   res: Response
 ) => {
   const result = await getProjectsService(
-    (req as any).user._id,
+    req.user!._id,
     req.query
   );
 
@@ -97,7 +97,7 @@ export const updateProject = async (
 
   const updatedProject = await updateProjectService(
     id,
-    (req as any).user._id,
+    req.user!._id,
     req.body
   );
 
@@ -133,7 +133,7 @@ export const deleteProject = async (
 
   const deletedProject = await deleteProjectService(
     id,
-    (req as any).user._id
+    req.user!._id
   );
 
   if (!deletedProject) {
