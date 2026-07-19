@@ -1,9 +1,10 @@
 import { Client } from "./client.model";
 import { ApiError } from "../../utils/apiError";
+import mongoose from "mongoose";
 
 export const createClientService = async (
   data: any,
-  userId: string
+  userId: mongoose.Types.ObjectId
 ) => {
   const existingClient = await Client.findOne({
     email: data.email,
@@ -23,7 +24,7 @@ export const createClientService = async (
   return client;
 };
 
-export const getClientsService = async (userId: string) => {
+export const getClientsService = async (userId: mongoose.Types.ObjectId) => {
   const clients = await Client.find({
     owner: userId,
     isDeleted: false,
@@ -34,7 +35,7 @@ export const getClientsService = async (userId: string) => {
 
 export const getClientByIdService = async (
   id: string,
-  userId: string
+  userId: mongoose.Types.ObjectId
 ) => {
   const client = await Client.findOne({
     _id: id,
@@ -47,7 +48,7 @@ export const getClientByIdService = async (
 
 export const updateClientService = async (
   id: string,
-  userId: string,
+  userId: mongoose.Types.ObjectId,
   data: any
 ) => {
   const allowedFields = ["name", "email", "phone", "company", "notes", "status"];
@@ -75,7 +76,7 @@ export const updateClientService = async (
 
 export const deleteClientService = async (
  id: string,
- userId: string,
+ userId: mongoose.Types.ObjectId,
 ) => {
   const deletedClient = await Client.findOneAndUpdate(
     {

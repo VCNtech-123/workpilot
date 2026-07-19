@@ -8,7 +8,7 @@ import { getClientByIdService, updateClientService, deleteClientService } from "
 export const createClient = async (req: Request, res: Response) => {
   const client = await createClientService(
     req.body,
-    (req as any).user._id
+    req.user!._id
   );
 
   res.status(201).json({
@@ -28,7 +28,7 @@ export const createClient = async (req: Request, res: Response) => {
 
 export const getClients = async (req: Request, res: Response) => {
   const clients = await getClientsService(
-    (req as any).user._id
+    req.user!._id
   );
 
   res.status(200).json({
@@ -55,7 +55,7 @@ export const getClientById = async (req: Request, res: Response) => {
 
   const client = await getClientByIdService(
     id,
-    (req as any).user._id
+    req.user!._id
   );
 
   if (!client) {
@@ -86,7 +86,7 @@ export const updateClient = async (req: Request, res: Response) => {
 
   const updatedClient = await updateClientService(
     id,
-    (req as any).user._id,
+    req.user!._id,
     req.body
   );
 
@@ -117,8 +117,9 @@ export const deleteClient = async (req: Request, res: Response) => {
     throw new ApiError(400, "Invalid Client ID");
   }
 
-  const deletedClient = await deleteClientService(id, 
-    (req as any).user._id
+  const deletedClient = await deleteClientService(
+    id, 
+    req.user!._id
   );
 
   if (!deletedClient) {
