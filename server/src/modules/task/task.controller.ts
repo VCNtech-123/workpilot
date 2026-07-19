@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { createTaskService, getTaskService, getTaskByIdService, updateTaskByIdService } from "./task.service";
+import { createTaskService, getTaskService, getTaskByIdService, updateTaskByIdService, deleteTaskService } from "./task.service";
 import mongoose from "mongoose";
 import { ApiError } from "../../utils/apiError";
 
@@ -124,5 +124,31 @@ export const updateTaskById = async (
         dueDate: updatedTask.dueDate,
         updatedAt: updatedTask.updatedAt
         }
+    });
+}
+
+export const deleteTask = async (
+    req: Request,
+    res: Response
+) => {
+
+    const id = req.params.id as string
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new ApiError(400, "Invalid task ID");
+    }
+
+    const deletedTask = await deleteTaskService(
+        id, 
+        (req as any).user._id
+    );
+
+    if (!deletedTask) {
+        throw new ApiError(400, "Task not found");
+    }
+
+     res.status(200).json({
+        status: "success",
+        message: "Task deleted successfully"
     });
 }
