@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose';
 export interface IProject extends mongoose.Document {
     name: string;
     description?: string;
-    status: 'active' | 'ongoing' | 'paused';
+    status: 'active' | 'completed' | 'paused';
     deadline?: Date;
     budget?: number;
     client: mongoose.Types.ObjectId;
