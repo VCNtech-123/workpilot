@@ -4,10 +4,11 @@ import { Client } from '../client/client.model';
 import { Task } from '../task/task.model';
 import { ApiError } from '../../utils/apiError';
 import { getPagination } from '../../utils/pagination';
+import { UpdatableProjectFields } from "../../types/project.types";
 import mongoose from 'mongoose';
 
 export const createProjectService = async (
-  data: any,
+  data: Partial<IProject>,
   userId: mongoose.Types.ObjectId
 ): Promise<IProject> => {
 
@@ -77,26 +78,21 @@ export const getProjectsService = async (
 export const updateProjectService = async (
   id: string,
   userId: mongoose.Types.ObjectId,
-  data: any
+  data: Partial<IProject>
 ) => {
 
-  const allowedFields: (keyof IProject)[] = [
-    "name",
-    "description",
-    "status",
-    "deadline",
-    "budget",
-    "client"
-  ];
+    const updateData: Partial<
+      Pick<IProject,
+        "name" | "description" | "status" | "deadline" | "budget" | "client"
+      >
+    > = {};
 
-  
-  const updateData: Partial<IProject> = {};
-
-  for (const key of allowedFields) {
-    if (data[key] !== undefined) {
-      updateData[key] = data[key];
-    }
-  }
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.description !== undefined) updateData.description = data.description;
+    if (data.status !== undefined) updateData.status = data.status;
+    if (data.deadline !== undefined) updateData.deadline = data.deadline;
+    if (data.budget !== undefined) updateData.budget = data.budget;
+    if (data.client !== undefined) updateData.client = data.client;
 
    if (updateData.client) {
     if (!mongoose.Types.ObjectId.isValid(updateData.client)) {
