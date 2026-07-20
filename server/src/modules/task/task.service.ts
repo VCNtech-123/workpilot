@@ -88,21 +88,15 @@ export const updateTaskByIdService = async (
     data: Partial<ITask>
 ) => {
 
-    const allowedFields: (keyof ITask)[] = [
-    "title",
-    "description",
-    "status",
-    "priority",
-    "dueDate"
-  ];
+    const updateData: Partial<
+        Pick<ITask, "title" | "description" | "status" | "priority" | "dueDate">
+    > = {};
 
-  const updateData: Record<string, unknown> = {};
-
-  for (const key of allowedFields) {
-    if (data[key] !== undefined) {
-      updateData[key] = data[key];
-    }
-  }
+    if (data.title !== undefined) updateData.title = data.title;
+    if (data.description !== undefined) updateData.description = data.description;
+    if (data.status !== undefined) updateData.status = data.status;
+    if (data.priority !== undefined) updateData.priority = data.priority;
+    if (data.dueDate !== undefined) updateData.dueDate = data.dueDate;
 
   const updatedTask = await Task.findOneAndUpdate(
     {
