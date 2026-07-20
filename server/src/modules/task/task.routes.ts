@@ -10,6 +10,6 @@ router.get("/", protect, getTasks);
 router.get("/:id", protect, getTaskById);
 router.put("/:id", protect, updateTaskById);
 router.delete("/:id", protect, deleteTask);
-router.patch(":id/restore", protect, restoreTask)
+router.patch("/:id/restore", protect, restoreTask)
 
 export default router;
