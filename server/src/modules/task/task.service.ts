@@ -2,6 +2,7 @@
 import { Task } from "./task.model";
 import { Project } from "../project/project.model";
 import { ApiError } from "../../utils/apiError";
+import { getPagination } from "../../utils/pagination";
 import mongoose from 'mongoose'
 
 export const createTaskService = async (
@@ -29,12 +30,10 @@ export const createTaskService = async (
 
 export const getTaskService = async (
     userId: mongoose.Types.ObjectId,
-    query: any
+    query: Record<string, unknown>
 ) => {
 
-    const page = parseInt(query.page as string) || 1;
-    const limit = parseInt(query.limit as string) || 1;
-    const skip = (page - 1) * limit
+    const { page, limit, skip } = getPagination(query);
 
     const filter: any = {
         owner: userId,
