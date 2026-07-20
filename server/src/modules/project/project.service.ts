@@ -50,7 +50,7 @@ export const getProjectsService = async (
   const { page, limit, skip } = getPagination(query);
   const status = query.status;
 
-  const filter: any = {
+  const filter: Record<string, unknown> = {
     owner: userId,
     isDeleted: false,
   };
