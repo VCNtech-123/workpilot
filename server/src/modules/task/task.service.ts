@@ -36,7 +36,7 @@ export const getTaskService = async (
 
     const { page, limit, skip } = getPagination(query);
 
-    const filter: any = {
+    const filter: Record<string, unknown> = {
         owner: userId,
         isDeleted: false
     }
