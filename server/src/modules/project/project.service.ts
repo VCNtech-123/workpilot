@@ -80,7 +80,7 @@ export const updateProjectService = async (
   data: any
 ) => {
 
-  const allowedFields = [
+  const allowedFields: (keyof IProject)[] = [
     "name",
     "description",
     "status",
@@ -90,7 +90,7 @@ export const updateProjectService = async (
   ];
 
   
-  const updateData: any = {};
+  const updateData: Partial<IProject> = {};
 
   for (const key of allowedFields) {
     if (data[key] !== undefined) {
