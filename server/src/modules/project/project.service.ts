@@ -1,6 +1,7 @@
 
 import { Project, IProject } from './project.model';
 import { Client } from '../client/client.model';
+import { Task } from '../task/task.model';
 import { ApiError } from '../../utils/apiError';
 import mongoose from 'mongoose';
 
@@ -130,6 +131,7 @@ export const deleteProjectService = async (
   id: string,
   userId: mongoose.Types.ObjectId
 ) => {
+
   const deletedProject = Project.findOneAndUpdate(
     {
     _id: id,
@@ -142,8 +144,22 @@ export const deleteProjectService = async (
     {
       new: true
     }
+  );
 
-  )
+  if (!deletedProject) {
+    return null
+  };
+
+  await Task.updateMany(
+    {
+      project: id,
+      owner: userId,
+      isDeleted: false
+    },
+    {
+      isDeleted: true
+    }
+  );
 
   return deletedProject;
 }
