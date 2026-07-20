@@ -163,3 +163,23 @@ export const deleteProjectService = async (
 
   return deletedProject;
 }
+
+export const restoreProjectService = async (
+  id: string, 
+  userId: mongoose.Types.ObjectId
+) => {
+
+  const restoredProject = await Project.findOneAndUpdate(
+    {
+      owner: userId,
+      _id: id,
+      isDeleted: true
+    },
+    {
+      isDeleted: false
+    },
+    { new: true }
+  );
+
+  return restoredProject;
+}
