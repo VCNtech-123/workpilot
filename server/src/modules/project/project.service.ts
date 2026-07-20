@@ -4,7 +4,6 @@ import { Client } from '../client/client.model';
 import { Task } from '../task/task.model';
 import { ApiError } from '../../utils/apiError';
 import { getPagination } from '../../utils/pagination';
-import { UpdatableProjectFields } from "../../types/project.types";
 import mongoose from 'mongoose';
 
 export const createProjectService = async (
