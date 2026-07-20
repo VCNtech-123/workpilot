@@ -1,9 +1,9 @@
-import { Client } from "./client.model";
-import { ApiError } from "../../utils/apiError";
+import { Client, IClient } from "./client.model";
+import { ApiError } from "../../utils/ApiError";
 import mongoose from "mongoose";
 
 export const createClientService = async (
-  data: any,
+  data: Partial<IClient>,
   userId: mongoose.Types.ObjectId
 ) => {
   const existingClient = await Client.findOne({
@@ -49,29 +49,30 @@ export const getClientByIdService = async (
 export const updateClientService = async (
   id: string,
   userId: mongoose.Types.ObjectId,
-  data: any
+  data: Partial<IClient>
 ) => {
-  const allowedFields = ["name", "email", "phone", "company", "notes", "status"];
+    const updateData: Partial<
+      Pick<IClient, "name" | "email" | "phone" | "company" | "notes" | "status">
+    > = {};
 
-  const updateData: any = {};
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.email !== undefined) updateData.email = data.email;
+    if (data.phone !== undefined) updateData.phone = data.phone;
+    if (data.company !== undefined) updateData.company = data.company;
+    if (data.notes !== undefined) updateData.notes = data.notes;
+    if (data.status !== undefined) updateData.status = data.status;
 
-  for (const key of allowedFields) {
-    if (data[key] !== undefined) {
-      updateData[key] = data[key];
-    }
-  }
+    const updatedClient = await Client.findOneAndUpdate(
+      {
+        _id: id,
+        owner: userId,
+        isDeleted: false,
+      },
+      updateData,
+      { new: true }
+    );
 
-  const updatedClient = await Client.findOneAndUpdate(
-    {
-      _id: id,
-      owner: userId,
-      isDeleted: false,
-    },
-    updateData,
-    { new: true }
-  );
-
-  return updatedClient;
+    return updatedClient;
 };
 
 export const deleteClientService = async (

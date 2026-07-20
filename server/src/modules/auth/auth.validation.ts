@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiError }from '../../utils/apiError'
+import { ApiError }from '../../utils/ApiError'
 
 export const validateRegister = (
     req: Request,

@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import { createTaskService, getTaskService, getTaskByIdService, updateTaskByIdService, deleteTaskService, restoreTaskService } from "./task.service";
 import mongoose from "mongoose";
-import { ApiError } from "../../utils/apiError";
+import { ApiError } from "../../utils/ApiError";
 
 export const createTask = async (
     req: Request,

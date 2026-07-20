@@ -1,12 +1,13 @@
 
-import { Task } from "./task.model";
+import { Task, ITask } from "./task.model";
 import { Project } from "../project/project.model";
-import { ApiError } from "../../utils/apiError";
+import { ApiError } from "../../utils/ApiError";
 import { getPagination } from "../../utils/pagination";
+
 import mongoose from 'mongoose'
 
 export const createTaskService = async (
-    data: any,
+    data: Partial<ITask>,
     userId: mongoose.Types.ObjectId
 ) => {
 
@@ -35,7 +36,7 @@ export const getTaskService = async (
 
     const { page, limit, skip } = getPagination(query);
 
-    const filter: any = {
+    const filter: Record<string, unknown> = {
         owner: userId,
         isDeleted: false
     }
@@ -84,24 +85,18 @@ export const getTaskByIdService = async (
 export const updateTaskByIdService = async (
     id: string,
     userId: mongoose.Types.ObjectId,
-    data: any
+    data: Partial<ITask>
 ) => {
 
-    const allowedFields = [
-    "title",
-    "description",
-    "status",
-    "priority",
-    "dueDate"
-  ];
+    const updateData: Partial<
+        Pick<ITask, "title" | "description" | "status" | "priority" | "dueDate">
+    > = {};
 
-  const updateData: any = {};
-
-  for (const key of allowedFields) {
-    if (data[key] !== undefined) {
-      updateData[key] = data[key];
-    }
-  }
+    if (data.title !== undefined) updateData.title = data.title;
+    if (data.description !== undefined) updateData.description = data.description;
+    if (data.status !== undefined) updateData.status = data.status;
+    if (data.priority !== undefined) updateData.priority = data.priority;
+    if (data.dueDate !== undefined) updateData.dueDate = data.dueDate;
 
   const updatedTask = await Task.findOneAndUpdate(
     {
