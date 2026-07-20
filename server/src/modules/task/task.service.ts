@@ -1,12 +1,13 @@
 
-import { Task } from "./task.model";
+import { Task, ITask } from "./task.model";
 import { Project } from "../project/project.model";
 import { ApiError } from "../../utils/apiError";
 import { getPagination } from "../../utils/pagination";
+
 import mongoose from 'mongoose'
 
 export const createTaskService = async (
-    data: any,
+    data: Partial<ITask>,
     userId: mongoose.Types.ObjectId
 ) => {
 
@@ -84,10 +85,10 @@ export const getTaskByIdService = async (
 export const updateTaskByIdService = async (
     id: string,
     userId: mongoose.Types.ObjectId,
-    data: any
+    data: Partial<ITask>
 ) => {
 
-    const allowedFields = [
+    const allowedFields: (keyof ITask)[] = [
     "title",
     "description",
     "status",
@@ -95,7 +96,7 @@ export const updateTaskByIdService = async (
     "dueDate"
   ];
 
-  const updateData: any = {};
+  const updateData: Record<string, unknown> = {};
 
   for (const key of allowedFields) {
     if (data[key] !== undefined) {
