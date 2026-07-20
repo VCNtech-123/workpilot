@@ -3,6 +3,7 @@ import { Project, IProject } from './project.model';
 import { Client } from '../client/client.model';
 import { Task } from '../task/task.model';
 import { ApiError } from '../../utils/apiError';
+import { getPagination } from '../../utils/pagination';
 import mongoose from 'mongoose';
 
 export const createProjectService = async (
@@ -43,13 +44,11 @@ export const getProjectByIdService = async (
 
 export const getProjectsService = async (
   userId: mongoose.Types.ObjectId,
-  query: any
+  query: Record<string, unknown>
 ) => {
-  const page = parseInt(query.page as string) || 1;
-  const limit = parseInt(query.limit as string) || 10;
-  const status = query.status;
 
-  const skip = (page - 1) * limit;
+  const { page, limit, skip } = getPagination(query);
+  const status = query.status;
 
   const filter: any = {
     owner: userId,
@@ -80,6 +79,7 @@ export const updateProjectService = async (
   userId: mongoose.Types.ObjectId,
   data: any
 ) => {
+
   const allowedFields = [
     "name",
     "description",
