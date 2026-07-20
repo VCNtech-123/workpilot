@@ -136,3 +136,23 @@ export const deleteTaskService = async (
 
     return deletedTask;
 }
+
+export const restoreTaskService = async (
+    id: string,
+    userId: mongoose.Types.ObjectId
+) => {
+    
+    const restoredTask = await Task.findOneAndUpdate(
+        {
+            owner: userId,
+            _id: id,
+            isDeleted: true
+        },
+        {
+            isDeleted: false
+        },
+        { new: true }
+    );
+
+    return restoredTask;
+}
