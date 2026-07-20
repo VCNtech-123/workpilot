@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { createClientService } from "./client.service";
 import { getClientsService } from "./client.service";
 import mongoose from "mongoose";
-import { ApiError } from "../../utils/apiError";
+import { ApiError } from "../../utils/ApiError";
 import { getClientByIdService, updateClientService, deleteClientService } from "./client.service";
 
 export const createClient = async (req: Request, res: Response) => {

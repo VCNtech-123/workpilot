@@ -1,7 +1,7 @@
 
 import { Task, ITask } from "./task.model";
 import { Project } from "../project/project.model";
-import { ApiError } from "../../utils/apiError";
+import { ApiError } from "../../utils/ApiError";
 import { getPagination } from "../../utils/pagination";
 
 import mongoose from 'mongoose'

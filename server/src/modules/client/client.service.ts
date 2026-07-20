@@ -1,5 +1,5 @@
 import { Client, IClient } from "./client.model";
-import { ApiError } from "../../utils/apiError";
+import { ApiError } from "../../utils/ApiError";
 import mongoose from "mongoose";
 
 export const createClientService = async (

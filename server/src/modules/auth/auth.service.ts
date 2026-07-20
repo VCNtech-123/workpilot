@@ -1,5 +1,5 @@
 import { User } from "../user/user.model";
-import { ApiError } from '../../utils/apiError';
+import { ApiError } from '../../utils/ApiError';
 
 export const registerUser = async ( 
     name: string,

@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import { createProjectService, getProjectByIdService, getProjectsService, updateProjectService, deleteProjectService, restoreProjectService } from './project.service';
-import { ApiError } from '../../utils/apiError';
+import { ApiError } from '../../utils/ApiError';
 import mongoose from 'mongoose'
 
 export const createProject = async (req: Request, res: Response) => {

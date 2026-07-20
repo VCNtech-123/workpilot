@@ -2,7 +2,7 @@
 import { Project, IProject } from './project.model';
 import { Client } from '../client/client.model';
 import { Task } from '../task/task.model';
-import { ApiError } from '../../utils/apiError';
+import { ApiError } from '../../utils/ApiError';
 import { getPagination } from '../../utils/pagination';
 import mongoose from 'mongoose';
 

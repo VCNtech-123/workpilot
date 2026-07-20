@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
-import { ApiError } from "../utils/apiError";
+import { ApiError } from "../utils/ApiError";
 import { User } from "../modules/user/user.model";
 
 export const protect = async (
