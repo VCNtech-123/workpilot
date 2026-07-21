@@ -6,10 +6,14 @@ import clientRoutes from "./modules/client/client.routes";
 import projectRoutes from './modules/project/project.routes';
 import taskRoutes from './modules/task/task.routes';
 import dashboardRoutes from './modules/dashboard/dashboard.routes';
+import { globalRateLimiter } from "./middleware/rateLimit.middleware";
+import { securityMiddleware } from "./middleware/security.middleware";
 
 const app = express();
 
+app.use(securityMiddleware);
 app.use(cors());
+app.use(globalRateLimiter)
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);

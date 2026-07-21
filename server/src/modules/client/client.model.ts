@@ -57,4 +57,7 @@ const clientSchema = new Schema<IClient>(
     }
 )
 
+clientSchema.index({ owner: 1 });
+clientSchema.index({ isDeleted: 1 });
+
 export const Client = mongoose.model<IClient>("Client", clientSchema)

@@ -55,4 +55,9 @@ const projectSchema = new Schema<IProject>(
   }
 )
 
+projectSchema.index({ owner: 1 });
+projectSchema.index({ client: 1 });
+projectSchema.index({ status: 1 });
+projectSchema.index({ isDeleted: 1 });
+
 export const Project = mongoose.model<IProject>("Project", projectSchema);

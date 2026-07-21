@@ -57,4 +57,9 @@ const taskSchema = new Schema<ITask>(
     }
 );
 
+taskSchema.index({ owner: 1 });
+taskSchema.index({ project: 1 });
+taskSchema.index({ status: 1 });
+taskSchema.index({ isDeleted: 1 });
+
 export const Task = mongoose.model<ITask>("Task", taskSchema);
