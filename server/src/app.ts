@@ -6,12 +6,12 @@ import clientRoutes from "./modules/client/client.routes";
 import projectRoutes from './modules/project/project.routes';
 import taskRoutes from './modules/task/task.routes';
 import dashboardRoutes from './modules/dashboard/dashboard.routes';
-import helmet from "helmet";
 import { globalRateLimiter } from "./middleware/rateLimit.middleware";
+import { securityMiddleware } from "./middleware/security.middleware";
 
 const app = express();
 
-app.use(helmet());
+app.use(securityMiddleware);
 app.use(cors());
 app.use(globalRateLimiter)
 app.use(express.json());
