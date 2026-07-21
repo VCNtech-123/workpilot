@@ -7,11 +7,13 @@ import projectRoutes from './modules/project/project.routes';
 import taskRoutes from './modules/task/task.routes';
 import dashboardRoutes from './modules/dashboard/dashboard.routes';
 import helmet from "helmet";
+import { globalRateLimiter } from "./middleware/rateLimit.middleware";
 
 const app = express();
 
 app.use(helmet());
 app.use(cors());
+app.use(globalRateLimiter)
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
