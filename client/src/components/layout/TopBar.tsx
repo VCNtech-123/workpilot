@@ -16,7 +16,7 @@ const Topbar = () => {
           Toggle Theme
         </button>
 
-        <div className="w-8 h-8 rounded-full bg-color-primary" />
+        <div className="w-8 h-8 rounded-full bg-primary" />
       </div>
     </header>
   );
