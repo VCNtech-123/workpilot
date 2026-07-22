@@ -2,26 +2,28 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* 1. Define theme colors using direct Tailwind color values */
 @theme {
-  --color-bg: theme(colors.gray.50);
-  --color-card: theme(colors.white);
-  --color-border: theme(colors.gray.200);
-  --color-text: theme(colors.gray.800);
+  --color-bg: var(--color-gray-50);
+  --color-card: var(--color-white);
+  --color-border: var(--color-gray-200);
+  --color-text: var(--color-gray-800);
 
-  --color-primary: theme(colors.indigo.600);
-  --color-primary-hover: theme(colors.indigo.500);
+  --color-primary: var(--color-indigo-600);
+  --color-primary-hover: var(--color-indigo-500);
 
-  --color-success: theme(colors.emerald.500);
-  --color-danger: theme(colors.red.500);
-  --color-warning: theme(colors.amber.500);
+  --color-success: var(--color-emerald-500);
+  --color-danger: var(--color-red-500);
+  --color-warning: var(--color-amber-500);
 }
 
+/* 2. Override the variables for dark mode using standard CSS rules */
 .dark {
-  --color-bg: theme(colors.gray.950);
-  --color-card: theme(colors.gray.900);
-  --color-border: theme(colors.gray.800);
-  --color-text: theme(colors.gray.100);
+  --color-bg: var(--color-gray-950);
+  --color-card: var(--color-gray-900);
+  --color-border: var(--color-gray-800);
+  --color-text: var(--color-gray-100);
 
-  --color-primary: theme(colors.indigo.400);
-  --color-primary-hover: theme(colors.indigo.300);
+  --color-primary: var(--color-indigo-400);
+  --color-primary-hover: var(--color-indigo-300);
 }
