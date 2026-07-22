@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: theme(colors.gray.50);
+  --color-card: theme(colors.white);
+  --color-border: theme(colors.gray.200);
+  --color-text: theme(colors.gray.800);
+
+  --color-primary: theme(colors.indigo.600);
+  --color-primary-hover: theme(colors.indigo.500);
+
+  --color-success: theme(colors.emerald.500);
+  --color-danger: theme(colors.red.500);
+  --color-warning: theme(colors.amber.500);
+}
+
+.dark {
+  --color-bg: theme(colors.gray.950);
+  --color-card: theme(colors.gray.900);
+  --color-border: theme(colors.gray.800);
+  --color-text: theme(colors.gray.100);
+
+  --color-primary: theme(colors.indigo.400);
+  --color-primary-hover: theme(colors.indigo.300);
+}
