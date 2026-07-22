@@ -26,30 +26,38 @@
   --color-primary-hover: var(--color-indigo-300);
 }
 
-@import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@layer components {
+  .bg-app {
+    background-color: var(--color-bg);
+  }
 
-@theme {
-  --color-bg: var(--color-gray-50);
-  --color-card: var(--color-white);
-  --color-border: var(--color-gray-200);
-  --color-text: var(--color-gray-800);
+  .bg-card {
+    background-color: var(--color-card);
+  }
 
-  --color-primary: var(--color-indigo-600);
-  --color-primary-hover: var(--color-indigo-500);
+  .border-app {
+    border-color: var(--color-border);
+  }
 
-  --color-success: var(--color-emerald-500);
-  --color-danger: var(--color-red-500);
-  --color-warning: var(--color-amber-500);
-}
+  .text-app {
+    color: var(--color-text);
+  }
 
-.dark {
-  --color-bg: var(--color-gray-950);
-  --color-card: var(--color-gray-900);
-  --color-border: var(--color-gray-800);
-  --color-text: var(--color-gray-100);
+  .text-primary {
+    color: var(--color-primary);
+  }
 
-  --color-primary: var(--color-indigo-400);
-  --color-primary-hover: var(--color-indigo-300);
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
 }
