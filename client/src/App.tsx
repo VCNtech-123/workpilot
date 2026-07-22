@@ -1,7 +1,8 @@
+import DashboardLayout from "./layouts/DashboardLayout";
 
 export const App = () => {
   return (
-    <div className="w-full h-full bg-black"></div>
+    <DashboardLayout />
   );
 }
 
