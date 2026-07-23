@@ -1,5 +1,6 @@
 import { Client, IClient } from "./client.model";
 import { ApiError } from "../../utils/ApiError";
+import { getPagination } from "../../utils/pagination";
 import mongoose from "mongoose";
 
 export const createClientService = async (
@@ -24,11 +25,28 @@ export const createClientService = async (
   return client;
 };
 
-export const getClientsService = async (userId: mongoose.Types.ObjectId) => {
+export const getClientsService = async (
+  userId: mongoose.Types.ObjectId,
+  query: Record<string, unknown>
+) => {
+
+  const { page, limit, skip } = getPagination(query);
+  const status = query.status;
+
+  const filter: Record<string, unknown> = {
+    owner: userId,
+    isDeleted: false,
+  };
+
+  if (status) {
+    filter.status = status;
+  }
   const clients = await Client.find({
     owner: userId,
     isDeleted: false,
-  }).sort({ createdAt: -1 });
+  }).sort({ createdAt: -1 })
+  .skip(skip)
+  .limit(limit);
 
   return clients;
 };
