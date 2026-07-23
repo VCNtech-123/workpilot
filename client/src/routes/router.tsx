@@ -5,12 +5,16 @@ import {
 } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+import ProtectedRoute from "./ProtectedRoute";
+import AuthLayout from "../layouts/AuthLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <DashboardLayout />
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
     ),
     children: [
       {
@@ -20,6 +24,15 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+      }
+    ]
+  }
 ]);
 
 export const AppRouter = () => {
