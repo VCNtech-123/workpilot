@@ -41,7 +41,7 @@ const Clients = () => {
         }
         
         getClientsData();
-    }, [page, ])
+    }, [page, limit ])
 
     const columns: Column<Client>[] = [
         {
