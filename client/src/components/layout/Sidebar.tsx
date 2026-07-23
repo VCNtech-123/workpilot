@@ -1,42 +1,93 @@
 import { NavLink } from "react-router-dom";
+import Logo from "../../assets/logo.png";
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 min-h-screen p-6 bg-card border-r border-app">
-      <h2 className="text-xl font-bold mb-8 text-primary">
-        WorkPilot
-      </h2>
+    <aside
+      className="
+        fixed 
+        bottom-0 
+        left-0 
+        right-0 
+        h-16 
+        bg-card 
+        border-t 
+        border-app 
+        flex 
+        items-center 
+        justify-around 
+        px-4
+        md:static 
+        md:h-auto 
+        md:w-64 
+        md:min-h-screen 
+        md:flex-col 
+        md:items-start 
+        md:justify-start 
+        md:border-t-0 
+        md:border-r 
+        md:p-6
+      "
+    >
+      <div className="hidden md:flex items-center mb-10">
+        <img
+          src={Logo}
+          alt="WorkPilot Logo"
+          className="w-13 h-13 object-contain"
+        />
+        <h2 className="text-lg font-semibold text-primary">
+          WorkPilot
+        </h2>
+      </div>
 
-      <nav className="space-y-2">
-        <NavLink
-          to="/dashboard"
-          className="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-        >
-          Dashboard
-        </NavLink>
-
-        <NavLink
-          to="/clients"
-          className="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-        >
-          Clients
-        </NavLink>
-
-        <NavLink
-          to="/projects"
-          className="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-        >
-          Projects
-        </NavLink>
-
-        <NavLink
-          to="/tasks"
-          className="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-        >
-          Tasks
-        </NavLink>
+      <nav
+        className="
+          flex 
+          w-full 
+          justify-around 
+          md:flex-col 
+          md:space-y-2 
+          md:w-full
+        "
+      >
+        <NavItem to="/dashboard" label="Dashboard" />
+        <NavItem to="/clients" label="Clients" />
+        <NavItem to="/projects" label="Projects" />
+        <NavItem to="/tasks" label="Tasks" />
       </nav>
     </aside>
+  );
+};
+
+interface NavItemProps {
+  to: string;
+  label: string;
+}
+
+const NavItem = ({ to, label }: NavItemProps) => {
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `
+        text-sm font-medium 
+        px-3 py-2 
+        rounded-lg 
+        transition-all 
+        duration-200
+        ${
+          isActive
+            ? "bg-primary text-white"
+            : "hover:bg-gray-200 dark:hover:bg-gray-800"
+        }
+        md:w-full
+        text-center 
+        md:text-left
+        `
+      }
+    >
+      {label}
+    </NavLink>
   );
 };
 

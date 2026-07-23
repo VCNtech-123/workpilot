@@ -9,9 +9,12 @@ import Dashboard from "../pages/dashboard/Dashboard";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardLayout />,
+    element: (
+      <DashboardLayout />
+    ),
     children: [
       {
+        path: "/dashboard",
         index: true,
         element: <Dashboard />,
       },
