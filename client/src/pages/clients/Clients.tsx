@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import DataTable from "../../components/ui/table/DataTable";
 import type { Column } from "../../components/ui/table/DataTable";
@@ -6,6 +6,7 @@ import TableSkeleton from "../../components/ui/table/TableSkeleton";
 import Button from "../../components/ui/Button";
 import Badge from "../../components/ui/Badge";
 import Pagination from "../../components/ui/table/Pagination";
+import { getClients } from "../../api/client.api";
 
 
 interface Client {
@@ -22,8 +23,25 @@ const Clients = () => {
 
     const [page, setPage] = useState<number>(1);
     const [limit] = useState<number>(10);
-    const [totalPages, setTotalPages] = useState<number>(1);
+    const [totalPages] = useState<number>(1);
 
+    useEffect(() => {
+        
+        const getClientsData = async () => {
+            try {
+                setLoading(true);
+                const response = await getClients({ page: page, limit: limit})
+                console.log(response.data);
+                setClients(response.data)
+            } catch (err: any) {
+                console.log(err?.message || "failed to fetch data")
+            } finally {
+                setLoading(false)
+            }
+        }
+        
+        getClientsData();
+    }, [page, ])
 
     const columns: Column<Client>[] = [
         {
