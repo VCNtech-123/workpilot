@@ -4,6 +4,8 @@ import { getDashboard } from "../../api/dashboard.api";
 import { useState, useEffect } from "react";
 import { CardContent, CardHeader } from "../../components/ui/Card";
 import Skeleton from "../../components/ui/Skeleton";
+import { Users, FolderKanban, CheckSquare, AlertTriangle } from "lucide-react";
+import StatCard from "../../components/ui/StatCard";
 
 interface DashboardStats {
   totalClients: number;
@@ -80,50 +82,33 @@ const Dashboard = () => {
       <>
         <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-          {/* Clients */}
-          <Card hover className="cursor-pointer">
-            <CardContent>
-              <p className="text-sm opacity-70">Clients</p>
-              <h2 className="text-3xl font-bold mt-2">
-                {stats?.totalClients ?? 0}
-              </h2>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Clients"
+            value={stats?.totalClients ?? 0}
+            icon={Users}
+            accent="primary"
+          />
 
-          {/* Projects */}
-          <Card hover className="cursor-pointer">
-            <CardContent>
-              <p className="text-sm opacity-70">Projects</p>
-              <h2 className="text-3xl font-bold mt-2">
-                {stats?.totalProjects ?? 0}
-              </h2>
-              <div className="mt-3">
-                <Badge variant="success">
-                  {stats?.activeProjects ?? 0} Active
-                </Badge>
-              </div>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Projects"
+            value={stats?.totalProjects ?? 0}
+            icon={FolderKanban}
+            accent="success"
+          />
 
-          {/* Tasks */}
-          <Card hover className="cursor-pointer">
-            <CardContent>
-              <p className="text-sm opacity-70">Tasks</p>
-              <h2 className="text-3xl font-bold mt-2">
-                {stats?.totalTasks ?? 0}
-              </h2>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Tasks"
+            value={stats?.totalTasks ?? 0}
+            icon={CheckSquare}
+            accent="primary"
+          />
 
-          {/* Overdue */}
-          <Card hover className="cursor-pointer">
-            <CardContent>
-              <p className="text-sm opacity-70">Overdue</p>
-              <h2 className="text-3xl font-bold mt-2 text-(--color-danger)">
-                {stats?.overdueTasks ?? 0}
-              </h2>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Overdue"
+            value={stats?.overdueTasks ?? 0}
+            icon={AlertTriangle}
+            accent="danger"
+          />
 
         </div>
 
