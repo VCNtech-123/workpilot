@@ -5,6 +5,8 @@ import type { Column } from "../../components/ui/table/DataTable";
 import TableSkeleton from "../../components/ui/table/TableSkeleton";
 import Button from "../../components/ui/Button";
 import Badge from "../../components/ui/Badge";
+import Pagination from "../../components/ui/table/Pagination";
+
 
 interface Client {
   _id: string;
@@ -14,41 +16,46 @@ interface Client {
 }
 
 const Clients = () => {
-  // YOU handle fetching logic
-  const [clients] = useState<Client[]>([]);
-  const [loading] = useState(false);
 
-  const columns: Column<Client>[] = [
-    {
-      header: "Name",
-      accessor: "name",
-    },
-    {
-      header: "Email",
-      accessor: "email",
-    },
-    {
-      header: "Created",
-      accessor: "createdAt",
-      render: (row) =>
-        new Date(row.createdAt).toLocaleDateString(),
-    },
-    {
-      header: "Status",
-      accessor: "name",
-      render: () => <Badge variant="success">Active</Badge>,
-    },
-    {
-      header: "",
-      accessor: "_id",
-      render: () => (
-        <Button variant="ghost" size="sm">
-          View
-        </Button>
-      ),
-      className: "text-right",
-    },
-  ];
+    const [clients, setClients] = useState<Client[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const [page, setPage] = useState<number>(1);
+    const [limit] = useState<number>(10);
+    const [totalPages, setTotalPages] = useState<number>(1);
+
+
+    const columns: Column<Client>[] = [
+        {
+        header: "Name",
+        accessor: "name",
+        },
+        {
+        header: "Email",
+        accessor: "email",
+        },
+        {
+        header: "Created",
+        accessor: "createdAt",
+        render: (row) =>
+            new Date(row.createdAt).toLocaleDateString(),
+        },
+        {
+        header: "Status",
+        accessor: "name",
+        render: () => <Badge variant="success">Active</Badge>,
+        },
+        {
+        header: "",
+        accessor: "_id",
+        render: () => (
+            <Button variant="ghost" size="sm">
+            View
+            </Button>
+        ),
+        className: "text-right",
+        },
+    ];
 
   return (
     <div className="space-y-8">
@@ -74,12 +81,21 @@ const Clients = () => {
       {loading ? (
         <TableSkeleton columns={5} />
       ) : (
-        <DataTable
-          data={clients}
-          columns={columns}
-          keyField="_id"
-          emptyMessage="No clients found. Add your first client."
-        />
+        <>
+            <DataTable
+            data={clients}
+            columns={columns}
+            keyField="_id"
+            emptyMessage="No clients found. Add your first client."
+            />
+
+            <Pagination
+                page={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+                />
+        </>
+        
       )}
 
     </div>
