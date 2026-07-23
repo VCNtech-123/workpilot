@@ -42,3 +42,26 @@ const Card = ({
 };
 
 export default Card;
+
+interface SectionProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export const CardHeader = ({ children, className }: SectionProps) => (
+  <div className={clsx("mb-4", className)}>
+    {children}
+  </div>
+);
+
+export const CardContent = ({ children, className }: SectionProps) => (
+  <div className={clsx(className)}>
+    {children}
+  </div>
+);
+
+export const CardFooter = ({ children, className }: SectionProps) => (
+  <div className={clsx("mt-4 pt-4 border-t border-app", className)}>
+    {children}
+  </div>
+);
