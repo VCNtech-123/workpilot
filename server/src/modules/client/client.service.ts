@@ -30,25 +30,32 @@ export const getClientsService = async (
   query: Record<string, unknown>
 ) => {
 
-  const { page, limit, skip } = getPagination(query);
-  const status = query.status;
+    const { page, limit, skip } = getPagination(query);
+    const status = query.status;
 
-  const filter: Record<string, unknown> = {
-    owner: userId,
-    isDeleted: false,
-  };
+    const filter: Record<string, unknown> = {
+      owner: userId,
+      isDeleted: false,
+    };
 
-  if (status) {
-    filter.status = status;
-  }
-  const clients = await Client.find({
-    owner: userId,
-    isDeleted: false,
-  }).sort({ createdAt: -1 })
-  .skip(skip)
-  .limit(limit);
+    if (status) {
+      filter.status = status;
+    }
+    const clients = await Client.find({
+      owner: userId,
+      isDeleted: false,
+    }).sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
 
-  return clients;
+    const total = await Client.countDocuments(filter);
+  
+    return {
+      clients,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    };
 };
 
 export const getClientByIdService = async (
