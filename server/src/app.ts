@@ -12,7 +12,10 @@ import { securityMiddleware } from "./middleware/security.middleware";
 const app = express();
 
 app.use(securityMiddleware);
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: false,
+}));
 app.use(globalRateLimiter)
 app.use(express.json());
 
