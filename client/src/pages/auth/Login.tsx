@@ -25,7 +25,7 @@ const Login = () => {
         const res = await login({ email, password });
 
         setToken(res.token);
-        navigate("/dashboard")
+        navigate("/")
       } catch (err: any) {
         setError(
           err?.respoonse?.data?.message ||
