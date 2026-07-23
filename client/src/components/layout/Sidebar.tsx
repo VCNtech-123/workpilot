@@ -29,7 +29,6 @@ const Sidebar = () => {
         md:p-6
       "
     >
-      {/* ✅ Desktop Logo Section */}
       <div className="hidden md:flex items-center mb-10">
         <img
           src={Logo}
@@ -41,7 +40,6 @@ const Sidebar = () => {
         </h2>
       </div>
 
-      {/* ✅ Navigation */}
       <nav
         className="
           flex 
