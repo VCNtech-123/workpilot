@@ -1,21 +1,40 @@
+import clsx from "clsx";
+import { ReactNode } from "react";
+
 interface CardProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
+  variant?: "default" | "elevated" | "outline" | "ghost";
+  hover?: boolean;
+  padding?: boolean;
 }
 
-const Card = ({ children, className = "" }: CardProps) => {
+const baseStyles =
+  "rounded-xl transition-all duration-200";
+
+const variantStyles = {
+  default: "bg-card border border-app shadow-sm",
+  elevated: "bg-card border border-app shadow-md",
+  outline: "bg-card border border-app",
+  ghost: "bg-transparent border border-transparent",
+};
+
+const Card = ({
+  children,
+  className,
+  variant = "default",
+  hover = false,
+  padding = true,
+}: CardProps) => {
   return (
     <div
-      className={`
-        bg-card 
-        border border-app 
-        rounded-xl 
-        shadow-sm 
-        p-6 
-        transition-shadow 
-        hover:shadow-md 
-        ${className}
-      `}
+      className={clsx(
+        baseStyles,
+        variantStyles[variant],
+        hover && "hover:shadow-lg hover:-translate-y-0.5",
+        padding && "p-6",
+        className
+      )}
     >
       {children}
     </div>
