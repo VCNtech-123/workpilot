@@ -22,9 +22,9 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
 
-        <Card>
+        <Card className="flex flex-col justify-between">
           <div className="space-y-2">
             <p className="text-sm opacity-70">Clients</p>
             <h2 className="text-3xl font-bold">
@@ -33,7 +33,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card>
+        <Card className="flex flex-col justify-between">
           <div className="space-y-2">
             <p className="text-sm opacity-70">Projects</p>
             <h2 className="text-3xl font-bold">
@@ -45,7 +45,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card>
+        <Card className="flex flex-col justify-between">
           <div className="space-y-2">
             <p className="text-sm opacity-70">Tasks</p>
             <h2 className="text-3xl font-bold">
@@ -54,7 +54,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card>
+        <Card className="flex flex-col justify-between">
           <div className="space-y-2">
             <p className="text-sm opacity-70">Overdue</p>
             <h2 className="text-3xl font-bold text-(--color-danger)">
@@ -67,7 +67,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-        <Card>
+        <Card className="flex flex-col justify-between">
           <h3 className="text-lg font-semibold mb-4">
             Active Projects
           </h3>
@@ -83,7 +83,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card>
+        <Card className="flex flex-col justify-between">
           <h3 className="text-lg font-semibold mb-4">
             Recent Tasks
           </h3>
