@@ -8,6 +8,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/auth/Login";
+import Clients from "../pages/clients/Clients";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      {
+        path: "/clients",
+        element: <Clients />
+      }
     ],
   },
   {
