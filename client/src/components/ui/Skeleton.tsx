@@ -1,17 +1,16 @@
+import clsx from "clsx";
+
 interface SkeletonProps {
   className?: string;
 }
 
-const Skeleton = ({ className = "" }: SkeletonProps) => {
+const Skeleton = ({ className }: SkeletonProps) => {
   return (
     <div
-      className={`
-        animate-pulse 
-        bg-gray-200 
-        dark:bg-gray-800 
-        rounded-lg 
-        ${className}
-      `}
+      className={clsx(
+        "bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse",
+        className
+      )}
     />
   );
 };
