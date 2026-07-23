@@ -50,7 +50,7 @@ const Sidebar = () => {
           md:w-full
         "
       >
-        <NavItem to="/dashboard" label="Dashboard" />
+        <NavItem to="/" label="Dashboard" />
         <NavItem to="/clients" label="Clients" />
         <NavItem to="/projects" label="Projects" />
         <NavItem to="/tasks" label="Tasks" />
