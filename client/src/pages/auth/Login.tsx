@@ -25,7 +25,7 @@ const Login = () => {
         const res = await login({ email, password });
 
         setToken(res.token);
-        navigate("/dashboard")
+        navigate("/")
       } catch (err: any) {
         setError(
           err?.respoonse?.data?.message ||
@@ -51,7 +51,7 @@ const Login = () => {
             </div>
 
             {/* ✅ Form */}
-            <div className="space-y-4">
+            <form className="space-y-4">
 
               <div>
                 <label className="block text-sm mb-2">
@@ -77,7 +77,7 @@ const Login = () => {
                 />
               </div>
 
-            </div>
+            </form>
 
             {error && (
               <div className="text-sm text-(--color-danger)">

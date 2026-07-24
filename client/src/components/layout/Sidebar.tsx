@@ -5,6 +5,8 @@ const Sidebar = () => {
   return (
     <aside
       className="
+        hidden
+        lg:flex
         fixed 
         bottom-0 
         left-0 
@@ -12,8 +14,7 @@ const Sidebar = () => {
         h-16 
         bg-card 
         border-t 
-        border-app 
-        flex 
+        border-app  
         items-center 
         justify-around 
         px-4

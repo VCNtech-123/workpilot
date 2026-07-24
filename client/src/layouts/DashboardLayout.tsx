@@ -1,6 +1,7 @@
 import Sidebar from "../components/layout/Sidebar";
 import Topbar from "../components/layout/TopBar";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 
 const DashboardLayout = () => {
   return (
@@ -10,6 +11,7 @@ const DashboardLayout = () => {
         <div className="flex-1 flex flex-col min-h-screen">
           <Topbar />
           <main className="p-6">
+            <Toaster position="top-right" richColors />
             <Outlet />
           </main>
         </div>

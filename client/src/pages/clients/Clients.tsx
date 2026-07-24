@@ -7,6 +7,9 @@ import Button from "../../components/ui/Button";
 import Badge from "../../components/ui/Badge";
 import Pagination from "../../components/ui/table/Pagination";
 import { getClients } from "../../api/client.api";
+import { createClient } from "../../api/client.api";
+import AddClientModal from "./AddClientModal";
+import { toast } from "sonner";
 
 
 interface Client {
@@ -23,7 +26,9 @@ const Clients = () => {
 
     const [page, setPage] = useState<number>(1);
     const [limit] = useState<number>(10);
-    const [totalPages] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
+
+    const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
 
     useEffect(() => {
         
@@ -31,8 +36,9 @@ const Clients = () => {
             try {
                 setLoading(true);
                 const response = await getClients({ page: page, limit: limit})
-                console.log(response.data);
-                setClients(response.data)
+                console.log(response);
+                setClients(response.data);
+                setTotalPages(response.pages)
             } catch (err: any) {
                 console.log(err?.message || "failed to fetch data")
             } finally {
@@ -41,7 +47,29 @@ const Clients = () => {
         }
         
         getClientsData();
-    }, [page, limit ])
+    }, [page, limit]);
+
+    const handleCreateClient = async (data: {
+      name: string;
+      email: string
+    }) => {
+
+     try {
+        await createClient(data);
+        toast.success("Client created successfully");
+        
+        if (page !== 1) {
+          setPage(1);
+        } else {
+          const response = await getClients({ page, limit });
+          setClients(response.data);
+          setTotalPages(response.totalPages);
+        }
+
+      } catch (err: any) {
+        console.error(err?.message || "Failed to create client");
+      }
+    }
 
     const columns: Column<Client>[] = [
         {
@@ -76,12 +104,13 @@ const Clients = () => {
     ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
 
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
         <div>
-          <h1 className="text-2xl font-semibold">
+          <h1 className="text-xl sm:text-2xl font-semibold">
             Clients
           </h1>
           <p className="text-sm opacity-70 mt-1">
@@ -89,10 +118,14 @@ const Clients = () => {
           </p>
         </div>
 
-        <Button>
+        <Button
+          className="w-full sm:w-auto"
+          onClick={() => setIsAddOpen(true)}
+        >
           <Plus size={16} />
           Add Client
         </Button>
+
       </div>
 
       {/* Table */}
@@ -100,23 +133,31 @@ const Clients = () => {
         <TableSkeleton columns={5} />
       ) : (
         <>
+          <div className="overflow-x-auto">
             <DataTable
-            data={clients}
-            columns={columns}
-            keyField="_id"
-            emptyMessage="No clients found. Add your first client."
+              data={clients}
+              columns={columns}
+              keyField="_id"
+              emptyMessage="No clients found. Add your first client."
             />
+          </div>
 
-            <Pagination
-                page={page}
-                totalPages={totalPages}
-                onPageChange={setPage}
-                />
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
         </>
-        
       )}
 
+      <AddClientModal
+        open={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        onCreate={handleCreateClient}
+      />
+
     </div>
+    
   );
 };
 

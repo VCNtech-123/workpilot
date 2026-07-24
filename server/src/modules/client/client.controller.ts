@@ -27,14 +27,18 @@ export const createClient = async (req: Request, res: Response) => {
 };
 
 export const getClients = async (req: Request, res: Response) => {
-  const clients = await getClientsService(
-    req.user!._id
+  const result = await getClientsService(
+    req.user!._id,
+    req.query
   );
 
   res.status(200).json({
     status: "success",
-    results: clients.length,
-    data: clients.map((client) => ({
+    results: result.clients.length,
+    total: result.total,
+    page: result.page,
+    pages: result.pages,
+    data: result.clients.map((client) => ({
       id: client._id,
       name: client.name,
       email: client.email,
