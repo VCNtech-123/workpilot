@@ -7,6 +7,8 @@ import Button from "../../components/ui/Button";
 import Badge from "../../components/ui/Badge";
 import Pagination from "../../components/ui/table/Pagination";
 import { getClients } from "../../api/client.api";
+import { createClient } from "../../api/client.api";
+import AddClientModal from "./AddClientModal";
 
 
 interface Client {
@@ -25,7 +27,7 @@ const Clients = () => {
     const [limit] = useState<number>(10);
     const [totalPages, setTotalPages] = useState<number>(1);
 
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
 
     useEffect(() => {
         
@@ -44,7 +46,28 @@ const Clients = () => {
         }
         
         getClientsData();
-    }, [page, limit])
+    }, [page, limit]);
+
+    const handleCreateClient = async (data: {
+      name: string;
+      email: string
+    }) => {
+
+     try {
+        await createClient(data);
+
+        if (page !== 1) {
+          setPage(1);
+        } else {
+          const response = await getClients({ page, limit });
+          setClients(response.data);
+          setTotalPages(response.totalPages);
+        }
+
+      } catch (err: any) {
+        console.error(err?.message || "Failed to create client");
+      }
+    }
 
     const columns: Column<Client>[] = [
         {
@@ -95,7 +118,7 @@ const Clients = () => {
 
         <Button
           className="w-full sm:w-auto"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsAddOpen(true)}
         >
           <Plus size={16} />
           Add Client
@@ -125,7 +148,14 @@ const Clients = () => {
         </>
       )}
 
+      <AddClientModal
+        open={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        onCreate={handleCreateClient}
+      />
+
     </div>
+    
   );
 };
 
