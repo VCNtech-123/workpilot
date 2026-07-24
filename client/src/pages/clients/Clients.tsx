@@ -9,6 +9,7 @@ import Pagination from "../../components/ui/table/Pagination";
 import { getClients } from "../../api/client.api";
 import { createClient } from "../../api/client.api";
 import AddClientModal from "./AddClientModal";
+import { toast } from "sonner";
 
 
 interface Client {
@@ -55,7 +56,8 @@ const Clients = () => {
 
      try {
         await createClient(data);
-
+        toast.success("Client created successfully");
+        
         if (page !== 1) {
           setPage(1);
         } else {
