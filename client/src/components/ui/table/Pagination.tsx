@@ -4,37 +4,39 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination = ({
-  page,
-  totalPages,
-  onPageChange,
-}: PaginationProps) => {
-  if (totalPages <= 1) return null;
+const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) => {
+
+  const total = Number(totalPages) || 0;
+
+  if (total < 2) return null;
+
+  const isFirstPage = page <= 1;
+  const isLastPage = page >= total;
 
   return (
-    <div className="flex items-center justify-end gap-2 mt-6">
-
+    <nav aria-label="Pagination" className="flex items-center justify-end gap-2 mt-6">
       <button
-        disabled={page === 1}
-        onClick={() => onPageChange(page - 1)}
-        className="px-3 py-1 text-sm border border-app rounded-md disabled:opacity-40"
+        type="button"
+        disabled={isFirstPage}
+        onClick={() => !isFirstPage && onPageChange(page - 1)}
+        className="px-3 py-1 text-sm border border-app rounded-md disabled:opacity-40 disabled:cursor-not-allowed"
       >
         Prev
       </button>
 
       <span className="text-sm opacity-70">
-        Page {page} of {totalPages}
+        Page {page} of {total}
       </span>
 
       <button
-        disabled={page === totalPages}
-        onClick={() => onPageChange(page + 1)}
-        className="px-3 py-1 text-sm border border-app rounded-md disabled:opacity-40"
+        type="button"
+        disabled={isLastPage}
+        onClick={() => !isLastPage && onPageChange(page + 1)}
+        className="px-3 py-1 text-sm border border-app rounded-md disabled:opacity-40 disabled:cursor-not-allowed"
       >
         Next
       </button>
-
-    </div>
+    </nav>
   );
 };
 

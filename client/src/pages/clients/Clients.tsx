@@ -35,7 +35,7 @@ const Clients = () => {
                 const response = await getClients({ page: page, limit: limit})
                 console.log(response.data);
                 setClients(response.data);
-                setTotalPages(response.data.pages)
+                setTotalPages(response.pages)
             } catch (err: any) {
                 console.log(err?.message || "failed to fetch data")
             } finally {
