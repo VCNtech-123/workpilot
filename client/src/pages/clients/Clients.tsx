@@ -22,8 +22,10 @@ const Clients = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [page, setPage] = useState<number>(1);
-    const [limit] = useState<number>(10);
-    const [totalPages] = useState<number>(1);
+    const [limit] = useState<number>(2);
+    const [totalPages, setTotalPages] = useState<number>(1);
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
         
@@ -32,7 +34,8 @@ const Clients = () => {
                 setLoading(true);
                 const response = await getClients({ page: page, limit: limit})
                 console.log(response.data);
-                setClients(response.data)
+                setClients(response.data);
+                setTotalPages(response.data.pages)
             } catch (err: any) {
                 console.log(err?.message || "failed to fetch data")
             } finally {
@@ -41,7 +44,7 @@ const Clients = () => {
         }
         
         getClientsData();
-    }, [page, limit ])
+    }, [page, limit])
 
     const columns: Column<Client>[] = [
         {
@@ -76,12 +79,13 @@ const Clients = () => {
     ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
 
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
         <div>
-          <h1 className="text-2xl font-semibold">
+          <h1 className="text-xl sm:text-2xl font-semibold">
             Clients
           </h1>
           <p className="text-sm opacity-70 mt-1">
@@ -89,10 +93,14 @@ const Clients = () => {
           </p>
         </div>
 
-        <Button>
+        <Button
+          className="w-full sm:w-auto"
+          onClick={() => setIsModalOpen(true)}
+        >
           <Plus size={16} />
           Add Client
         </Button>
+
       </div>
 
       {/* Table */}
@@ -100,20 +108,21 @@ const Clients = () => {
         <TableSkeleton columns={5} />
       ) : (
         <>
+          <div className="overflow-x-auto">
             <DataTable
-            data={clients}
-            columns={columns}
-            keyField="_id"
-            emptyMessage="No clients found. Add your first client."
+              data={clients}
+              columns={columns}
+              keyField="_id"
+              emptyMessage="No clients found. Add your first client."
             />
+          </div>
 
-            <Pagination
-                page={page}
-                totalPages={totalPages}
-                onPageChange={setPage}
-                />
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
         </>
-        
       )}
 
     </div>
