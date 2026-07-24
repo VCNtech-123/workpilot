@@ -22,7 +22,7 @@ const Clients = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [page, setPage] = useState<number>(1);
-    const [limit] = useState<number>(2);
+    const [limit] = useState<number>(10);
     const [totalPages, setTotalPages] = useState<number>(1);
 
     const [isModalOpen, setIsModalOpen] = useState(false)
