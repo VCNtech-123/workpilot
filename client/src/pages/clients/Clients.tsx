@@ -33,7 +33,7 @@ const Clients = () => {
             try {
                 setLoading(true);
                 const response = await getClients({ page: page, limit: limit})
-                console.log(response.data);
+                console.log(response);
                 setClients(response.data);
                 setTotalPages(response.pages)
             } catch (err: any) {
